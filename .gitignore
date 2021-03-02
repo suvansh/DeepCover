@@ -1,5 +1,7 @@
 # personal config
 src/config/config_personal.py
+# code output (too large)
+output
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
