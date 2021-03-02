@@ -1,5 +1,5 @@
 # personal config
-src/config.py
+src/config/config_personal.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
