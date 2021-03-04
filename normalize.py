@@ -10,7 +10,7 @@ def normalizeData(week):
     print(f"Week{week} | Started script | {round(time.time()-prev_time, 4)} s")
     prev_time = time.time()
 
-    track_df = pd.read_csv(f"./bdbdata/week{week}.csv", low_memory=False).reset_index(drop=True)
+    track_df = pd.read_csv(f"./bdbdata/week{week}.csv", low_memory=False).drop_duplicates().reset_index(drop=True)
     games_df = pd.read_csv("./bdbdata/games.csv", low_memory=False).reset_index(drop=True)
     plays_df = pd.read_csv("./bdbdata/plays.csv", low_memory=False).reset_index(drop=True)
 
@@ -97,7 +97,7 @@ def normalizeData(week):
     # remove footballs from dataset
     track_df = track_df.loc[track_df.nflId != 0]
     track_df.dropna()
-    track_df.reset_index(drop=True, inplace=True)
+    track_df.drop_duplicates().reset_index(drop=True, inplace=True)
 
     track_df = track_df[['gameId', 'playId', 'frameId', 'event', 'play_end_frm', 'nflId', 'displayName', 'jerseyNumber', 'position',
                          'position_general', 'team', 'team_pos', 'teamAbbr', 'route', 'time', 'los', 'x', 'y', 'dis', 'o', 'v', 'v_x', 'v_y', 'v_dir',
@@ -106,7 +106,7 @@ def normalizeData(week):
     print(f"Week{week} | Done normalizing | {round(time.time()-prev_time,4)} s")
     prev_time = time.time()
 
-    f = f'./thin_data/week{week}_mod.csv'
+    f = f'./thindata/week{week}_mod.csv'
     track_df.to_csv(f, index=False)
 
     print(f"Week{week} | Done exporting | Took {round(time.time()-prev_time, 4)} s")
@@ -115,7 +115,7 @@ def normalizeData(week):
 
 WEEKS = list(range(1, 18))
 # WEEKS = ['toy']
-normalizeData(14)
-# pool = multiprocessing.Pool(10)
-# pool.map(normalizeData, WEEKS)
-# pool.close()
+# normalizeData(2)
+pool = multiprocessing.Pool(10)
+pool.map(normalizeData, WEEKS)
+pool.close()
