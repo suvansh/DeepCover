@@ -10,7 +10,7 @@ def get_repo_dir():
 def datetime_str(dt=None):
     return datetime.strftime(dt or datetime.now(), '%m%d%Y_%H%M%S')
 
-def logger(msg, file=None, log_to_file=False):
+def logger(msg, file=None, log_to_file=True):
     assert not (log_to_file and file is None)
     print(msg)
     print(msg, file=file)
