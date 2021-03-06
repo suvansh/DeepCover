@@ -1,6 +1,8 @@
 from os.path import dirname
 from datetime import datetime
 import json
+from collections import OrderedDict
+import itertools
 
 
 def get_repo_dir():
@@ -50,4 +52,11 @@ def jsonify(obj, out_file=None, *args, **kwargs):
     else:
         json.dump(jsonify_ready_obj, out_file, *args, **kwargs)
     
-    
+def sweep(params):
+	"""
+	:param params: dict mapping parameter names to a list containing all values that parameter should take on. eg {'learning_rate': [1e-3, 1e-4, 1e-5], 'num_layers': [16, 32]}
+	:returns Cartesian product of params in the form of a list of dicts mapping parameter names to values from the corresponding list
+	"""
+	od = OrderedDict(params)  # so keys() and values() reliably return in same order
+	return list(dict(zip(od.keys(), assignment)) for assignment in itertools.product(*od.values()))
+ 
