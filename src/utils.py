@@ -12,10 +12,12 @@ def get_repo_dir():
 def datetime_str(dt=None):
     return datetime.strftime(dt or datetime.now(), '%m%d%Y_%H%M%S')
 
-def logger(msg, file=None, log_to_file=False):
+def logger(msg, file=None, log_to_file=True, log_to_console=True):
     assert not (log_to_file and file is None)
-    print(msg)
-    print(msg, file=file)
+    if log_to_console:
+        print(msg)
+    if log_to_file:
+        print(msg, file=file)
 
 def jsonify_helper(obj):
     primitives = (str, int, bool, float)
@@ -53,10 +55,10 @@ def jsonify(obj, out_file=None, *args, **kwargs):
         json.dump(jsonify_ready_obj, out_file, *args, **kwargs)
     
 def sweep(params):
-	"""
-	:param params: dict mapping parameter names to a list containing all values that parameter should take on. eg {'learning_rate': [1e-3, 1e-4, 1e-5], 'num_layers': [16, 32]}
-	:returns Cartesian product of params in the form of a list of dicts mapping parameter names to values from the corresponding list
-	"""
-	od = OrderedDict(params)  # so keys() and values() reliably return in same order
-	return list(dict(zip(od.keys(), assignment)) for assignment in itertools.product(*od.values()))
+    """
+    :param params: dict mapping parameter names to a list containing all values that parameter should take on. eg {'learning_rate': [1e-3, 1e-4, 1e-5], 'num_layers': [16, 32]}
+    :returns Cartesian product of params in the form of a list of dicts mapping parameter names to values from the corresponding list
+    """
+    od = OrderedDict(params)  # so keys() and values() reliably return in same order
+    return list(dict(zip(od.keys(), assignment)) for assignment in itertools.product(*od.values()))
  
