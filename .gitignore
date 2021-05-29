@@ -3,6 +3,10 @@ src/config/config_personal.py
 # code output (too large)
 output
 
+# data dir
+data/*
+!data/insert_data_here.gitkeep
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -132,3 +136,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# editors
+.vscode/*
